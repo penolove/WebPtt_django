@@ -6,6 +6,7 @@
 <title>Word Cloud for ptt</title>
 <!-- Bootstrap core CSS -->
 <link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+<link href={% static "bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" %} rel="stylesheet">
 </head>
 
 
@@ -13,13 +14,11 @@
     <div class="row" >
         <div class='col-md-3 '>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker6'>
-                    <input id='date_input' type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd" >
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
-            </div>
+            </div>            
         </div>
         {% if P_N == -1 %}
         <div class="col-md-3 text-center" ><a class="btn btn-default">Frist_page</a></div>
@@ -46,31 +45,51 @@
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src={% static "polls/jquery-3.1.1.min.js"%} ></script>
-<script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
-<script src={% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" %}></script>
-<script>
+<script type="text/javascript" src={% static "polls/jquery-3.1.1.min.js"%} ></script>
+<script type="text/javascript" src={% static "polls/moment.min.js"%} ></script>
+<script type="text/javascript" src={% static "bootstrap/js/bootstrap.min.js" %}></script>
+<script type="text/javascript" src={% static "bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}></script>
+
+
+
+<script type="text/javascript">
+//variables used to open url
 var date ="{{date}}";
 var id =parseInt("{{id}}");
-//console.log('http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date)
-//console.log('http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date)
 
-// these are used for datetimepicker
-$(function () {
-        $('#datetimepicker6').datetimepicker();
-        });
-$('#datetimepicker6').on('changeDate', function(ev){
-        console.log($("#date_input").val())
-        });
+$('.form_date').datetimepicker({
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    minView: 2,
+});
+
+$('.form_date').datetimepicker('setDate', new Date(date) );
+$('.form_date').datetimepicker('setStartDate', new Date("{{startDate}}"));
+$('.form_date').datetimepicker('setEndDate', new Date("{{endDate}}"));
+
+
+$('.form_date').on('changeDate', function(ev){
+    var date_str=$(".form-control").val();
+    var date_list=date_str.split('.');
+    if(parseInt(date_list[1])<10){
+        var date_selected = date_list[0]+'.'+parseInt(date_list[1])+'.'+date_list[2];
+    }else{
+        var date_selected = date_str;
+    }
+
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/1/'+date_selected;
+});
 
 function Next() {
-        window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date;
 }
 
 function Prev() {
-        window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date;
 }
 // these are used for datetimepicker
-
 </script>
+
+
 </html>

@@ -31,7 +31,7 @@
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src={% static "polls/jquery-3.1.1.min.js"%} ></script>
 <script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
 
 <script>
@@ -39,7 +39,7 @@ function FoodBoard() {
     document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/FoodBoard/';
 }
 function Gossip() {
-    document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/if/7';
+    document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/if/1';
 }
 </script>
 </html>
