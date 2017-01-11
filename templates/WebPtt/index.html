@@ -1,0 +1,45 @@
+{% load static %}
+
+<html lang="en">
+<head>
+<title>野生 Template for Bootstrap</title>
+<!-- Bootstrap core CSS -->
+<link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+</head>
+
+
+<body>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=Gossip()>Gossip</div>
+            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=FoodBoard()>FoodBoard</div>
+            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" >WHIMH</div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row" >
+        <div class="col-md-10 col-md-offset-1">
+            <div class="embed-responsive embed-responsive-16by9" >
+                <iframe id="ifr_main" class="embed-responsive-item"  src="if/1" style="overflow:hidden" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
+
+<script>
+function FoodBoard() {
+    document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/FoodBoard/';
+}
+function Gossip() {
+    document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/if/7';
+}
+</script>
+</html>
