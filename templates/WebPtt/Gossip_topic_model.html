@@ -12,17 +12,16 @@
 
 <body style="height:90%" >
     <div class="row" >
-        <div class='col-md-3 '>
+        <div class="col-md-4 text-center" ><button id="PrevBtn"  type="button" class="btn btn-primary" style="margin-bottom: 2px;" onclick="Prev()">Prev_pgae</button></div>
+        <div class='col-md-4 '>
             <div class="form-group">
-                <div class="input-group date form_date" data-date="" data-date-format="yyyy.mm.dd" >
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy/mm/dd" >
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>            
         </div>
-        <div class="col-md-3 text-center" ><button id="PrevBtn"  type="button" class="btn" style="margin-bottom: 2px;">Prev_pgae</button></div>
-        <div class="col-md-3 text-center" ><button id="NextBtn" type="button" class="btn btn-primary" onclick="Next()"  style="margin-top: 2px;">Next_pgae</button></div>
-        <div class="col-md-3 text-center" style="font-size:25px" >Current page : <span id="index_info">{{index_info}}</span> <a id="article_url" target="_blank" href={{article_url}} class="badge">link</a>  </div>
+        <div class="col-md-4 text-center" ><button id="NextBtn" type="button" class="btn" style="margin-top: 2px;">Next_pgae</button></div>
     </div>
 
 
@@ -46,86 +45,95 @@
 
 <script type="text/javascript">
 //variables used to open url
+var cur_idx=0;
 var date ="{{date}}";
-var id =parseInt("{{id}}");
 
-//need to be given (2017/1/12)
-var url_list={{ url_list|safe }}
-var ammount={{ammount}}
-//need to be given (2017/1/12)
-
+var week_img_list={{ week_img_list|safe }}
+var date_list = week_img_list.map(function(value,index) { return value[1]; });
 // ------------ date setting -----------------
 $('.form_date').datetimepicker({
     autoclose: 1,
     todayHighlight: 1,
     startView: 2,
     minView: 2,
+    daysOfWeekDisabled: [0,1,2,3,5,6]    
 });
+start_date=week_img_list[week_img_list.length - 1][1]
 
 $('.form_date').datetimepicker('setDate', new Date(date) );
-$('.form_date').datetimepicker('setStartDate', new Date("{{startDate}}"));
-$('.form_date').datetimepicker('setEndDate', new Date("{{endDate}}"));
+$('.form_date').datetimepicker('setStartDate', new Date(start_date));
+$('.form_date').datetimepicker('setEndDate', new Date(date));
 
 $('.form_date').on('changeDate', function(ev){
     var date_str=$(".form-control").val();
+    console.log("you are selecting date : "+date_str);
+    cur_idx=date_list.indexOf(date_str);
+
+    console.log("image location replaced ,id : "+cur_idx);
+    date=week_img_list[cur_idx ][1]
+    $('.form_date').datetimepicker('setDate', new Date(date) );
+    $('img').attr('src','/static/'+week_img_list[cur_idx][0]);
+
+    if(cur_idx==week_img_list.length-1){
+        $('#NextBtn').attr('class',"btn btn-primary");
+        $('#NextBtn').attr('onclick',"Next()");
+        $('#PrevBtn').attr('class',"btn");
+        $('#PrevBtn').attr('onclick',"");
+    }else if(cur_idx==0){
+        $('#NextBtn').attr('class',"btn");
+        $('#NextBtn').attr('onclick',"");
+        $('#PrevBtn').attr('class',"btn btn-primary");
+        $('#PrevBtn').attr('onclick',"Prev()");
+    }else{
+        $('#NextBtn').attr('class',"btn btn-primary");
+        $('#NextBtn').attr('onclick',"Next()");
+        $('#PrevBtn').attr('class',"btn btn-primary");
+        $('#PrevBtn').attr('onclick',"Prev()");
+    }
+    /*
     var date_list=date_str.split('.');
     if(parseInt(date_list[1])<10){
         var date_selected = date_list[0]+'.'+parseInt(date_list[1])+'.'+date_list[2];
     }else{
         var date_selected = date_str;
     }
-    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/1/'+date_selected;
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/1/'+date_selected;*/
 });
 // ------------ date setting -----------------
 
 
 // ----------- button setting ----------------
 function Next() {
-    //window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date;
-    
-    //enable the PrevBtn
-    if(id==1){
+    //enable Prev_page
+    if(cur_idx==week_img_list.length-1){
         $('#PrevBtn').attr('class',"btn btn-primary");
         $('#PrevBtn').attr('onclick',"Prev()");
     }
-    id=id+1
-    console.log("image location replaced ,id : "+id);
-    $('img').attr('src',"/static/worldcloud/"+date+"_"+(id)+".png");
-    
-    //replace index_info
-    var index_info=id+'/'+ammount+'('+Math.round(id/ammount*100)+'% )';
-    $('#index_info').html(index_info);
-    
-    //replace article url
-    $('#article_url').attr('href',url_list[id-1]);
-
-    //disable the NextBtn
-    if(id==ammount){
+    cur_idx=cur_idx-1
+    console.log("image location replaced ,id : "+cur_idx);
+    date=week_img_list[cur_idx ][1]
+    $('.form_date').datetimepicker('setDate', new Date(date) );
+    $('img').attr('src','/static/'+week_img_list[cur_idx][0]);
+    //disable the PrevBtn
+    if(cur_idx==0){
         $('#NextBtn').attr('class',"btn");
         $('#NextBtn').attr('onclick',"");
     }
 }
 
 function Prev() {
-    //window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date;
-    //enable the NextBtn
-    if(id==ammount){
+    //enable Next_page
+    if(cur_idx==0){
         $('#NextBtn').attr('class',"btn btn-primary");
         $('#NextBtn').attr('onclick',"Next()");
     }
-    id=id-1
-    console.log("image location replaced ,id : "+id);
-    $('img').attr('src',"/static/worldcloud/"+date+"_"+(id)+".png");
-
-    //replace index_info
-    var index_info=id+'/'+ammount+'('+Math.round(id/ammount*100)+'% )';
-    $('#index_info').html(index_info);
-
-    //replace article url
-    $('#article_url').attr('href',url_list[id-1]);
-
+    cur_idx=cur_idx+1
+    console.log("image location replaced ,id : "+cur_idx);
+    date=week_img_list[cur_idx ][1]
+    $('.form_date').datetimepicker('setDate', new Date(date) );
+    $('img').attr('src','/static/'+week_img_list[cur_idx][0]);
     //disable the PrevBtn
-    if(id==1){
+    if(cur_idx==week_img_list.length-1){
         $('#PrevBtn').attr('class',"btn");
         $('#PrevBtn').attr('onclick',"");
     }

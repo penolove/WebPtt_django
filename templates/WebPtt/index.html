@@ -12,8 +12,8 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=Gossip()>Gossip</div>
+            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=TopicModel()>TopicModel</div>
             <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=FoodBoard()>FoodBoard</div>
-            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" >WHIMH</div>
         </div>
     </div>
 
@@ -40,6 +40,9 @@ function FoodBoard() {
 }
 function Gossip() {
     document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/if/1';
+}
+function TopicModel() {
+    document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/topic';
 }
 </script>
 </html>
