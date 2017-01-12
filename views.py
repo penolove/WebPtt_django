@@ -44,7 +44,7 @@ def get_article_ammount(date):
 def index(request):
     return render(request, 'WebPtt/index.html')
 
-def index_if(request,id,date):
+def index_if_back(request,id,date):
     """return correspondes image and render by id ,date"""
     #ammount=9
     ammount=get_article_ammount(date)
@@ -107,6 +107,32 @@ def Gossip_index_back(request,id):
 def Gossip_index(request,id):
     """return correspondes image and render by id. check if today have data"""
     date=get_today()
+    ammount=get_article_ammount(date)
+    article_url_list=['https://www.ptt.cc'+i[0] for i in url_dict[date]]
+    article_url=article_url_list[int(id)-1]
+    #pic_path
+    path='worldcloud/'+date+'_'+id+'.png'
+
+    #info for display
+    index_info=id+'/'+str(ammount)+' ('+str(int((float(id)/ammount*100)))+'% )'
+    
+    # check if last/first
+    if(int(id)==1):
+        P_N=-1
+    elif(int(id)==ammount):
+        P_N=1
+    else:
+        P_N=0
+
+    #dump article_url pass to Web
+    url_list = simplejson.dumps(article_url_list)
+
+    return render(request, 'WebPtt/Gossip_index.html',{'pic_path':path,'index_info':index_info,'P_N':P_N,'date':date,'id':id,'startDate':startDate,'endDate':endDate , 'article_url':article_url, 'url_list':url_list ,'ammount':ammount})
+
+
+
+def index_if(request,id,date):
+    """return correspondes image and render by id ,date"""
     ammount=get_article_ammount(date)
     article_url_list=['https://www.ptt.cc'+i[0] for i in url_dict[date]]
     article_url=article_url_list[int(id)-1]
