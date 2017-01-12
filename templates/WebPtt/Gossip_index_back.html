@@ -20,9 +20,17 @@
                 </div>
             </div>            
         </div>
-        <div class="col-md-3 text-center" ><button id="PrevBtn"  type="button" class="btn ">Prev_pgae</button></div>
-        <div class="col-md-3 text-center" ><button id="NextBtn" type="button" class="btn btn-primary" onclick="Next()" >Next_pgae</button></div>
-        <div class="col-md-3 text-center" style="font-size:25px" >Current page : <span id="index_info">{{index_info}}</span> <a id="article_url" target="_blank" href={{article_url}} class="badge">link</a>  </div>
+        {% if P_N == -1 %}
+        <div class="col-md-3 text-center" ><a class="btn btn-default">Frist_page</a></div>
+        {% else %}
+        <div class="col-md-3 text-center" ><button type="button" class="btn btn-primary" onclick="Prev()" >Prev_pgae</button></div>
+        {% endif %}
+        {% if P_N == 1 %}
+        <div class="col-md-3 text-center" ><a class="btn btn-default">Frist_page</a></div>
+        {% else %}
+        <div class="col-md-3 text-center" ><button type="button" class="btn btn-primary" onclick="Next()" >Next_pgae</button></div>
+        {% endif %}
+        <div class="col-md-3 text-center" style="font-size:25px" >Current page : {{index_info}} <a target="_blank" href={{article_url}} class="badge">link</a>  </div>
     </div>
 
 
@@ -49,12 +57,6 @@
 var date ="{{date}}";
 var id =parseInt("{{id}}");
 
-//need to be given (2017/1/12)
-var url_list={{ url_list|safe }}
-var ammount={{ammount}}
-//need to be given (2017/1/12)
-
-// ------------ date setting -----------------
 $('.form_date').datetimepicker({
     autoclose: 1,
     todayHighlight: 1,
@@ -66,6 +68,7 @@ $('.form_date').datetimepicker('setDate', new Date(date) );
 $('.form_date').datetimepicker('setStartDate', new Date("{{startDate}}"));
 $('.form_date').datetimepicker('setEndDate', new Date("{{endDate}}"));
 
+
 $('.form_date').on('changeDate', function(ev){
     var date_str=$(".form-control").val();
     var date_list=date_str.split('.');
@@ -74,65 +77,18 @@ $('.form_date').on('changeDate', function(ev){
     }else{
         var date_selected = date_str;
     }
+
     window.location.href = 'http://140.113.179.7:3344/pttWeb/if/1/'+date_selected;
 });
-// ------------ date setting -----------------
 
-
-// ----------- button setting ----------------
 function Next() {
-    //window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date;
-    
-    //enable the PrevBtn
-    if(id==1){
-        $('#PrevBtn').attr('class',"btn btn-primary");
-        $('#PrevBtn').attr('onclick',"Prev()");
-    }
-    id=id+1
-    console.log("image location replaced ,id : "+id);
-    $('img').attr('src',"/static/worldcloud/"+date+"_"+(id)+".png");
-    
-    //replace index_info
-    var index_info=id+'/'+ammount+'('+Math.round(id/ammount*100)+'% )';
-    $('#index_info').html(index_info);
-    
-    //replace article url
-    $('#article_url').attr('href',url_list[id-1]);
-
-    //disable the NextBtn
-    if(id==ammount){
-        $('#NextBtn').attr('class',"btn");
-        $('#NextBtn').attr('onclick',"");
-    }
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id+1)+"/"+date;
 }
 
 function Prev() {
-    //window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date;
-    //enable the NextBtn
-    if(id==ammount){
-        $('#NextBtn').attr('class',"btn btn-primary");
-        $('#NrxtBtn').attr('onclick',"Next()");
-    }
-    id=id-1
-    console.log("image location replaced ,id : "+id);
-    $('img').attr('src',"/static/worldcloud/"+date+"_"+(id)+".png");
-
-    //replace index_info
-    var index_info=id+'/'+ammount+'('+Math.round(id/ammount*100)+'% )';
-    $('#index_info').html(index_info);
-
-    //replace article url
-    $('#article_url').attr('href',url_list[id-1]);
-
-    //disable the PrevBtn
-    if(id==1){
-        $('#PrevBtn').attr('class',"btn");
-        $('#PrevBtn').attr('onclick',"");
-    }
+    window.location.href = 'http://140.113.179.7:3344/pttWeb/if/'+(id-1)+"/"+date;
 }
-// ----------- button setting ----------------
-
-
+// these are used for datetimepicker
 </script>
 
 
