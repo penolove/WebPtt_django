@@ -5,24 +5,21 @@
 <title>野生 Template 練習 Loser</title>
 <!-- Bootstrap core CSS -->
 <link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+<link href={% static "polls/style.css" %} rel="stylesheet">
 </head>
 
 
 <body>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=Gossip()>Gossip</div>
-            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=TopicModel()>TopicModel</div>
-            <div class="col-md-4 text-center" style="font-size:35px; cursor:hand" onclick=FoodBoard()>FoodBoard</div>
-        </div>
+    <div class="row vertical-align" style="height:5%">
+        <div class="col-md-4 col-sm-4 text-center" style="font-size:35px; cursor:hand" onclick=Gossip()>Gossip</div>
+        <div class="col-md-4 col-sm-4 text-center" style="font-size:35px; cursor:hand" onclick=TopicModel()>TopicModel</div>
+        <div class="col-md-4 col-sm-4 text-center" style="font-size:35px; cursor:hand" onclick=FoodBoard()>FoodBoard</div>
     </div>
 
     <hr>
-    <div class="row" >
-        <div class="col-md-10 col-md-offset-1">
-            <div class="embed-responsive embed-responsive-16by9" >
-                <iframe id="ifr_main" class="embed-responsive-item"  src="if/1" style="overflow:hidden" scrolling="no"></iframe>
-            </div>
+    <div class="row" style="height:85%; ">
+        <div id="If_size_ratio" class="embed-responsive col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="height:100%;">
+            <iframe id="ifr_main" class="embed-responsive-item"  src="if/1" style="overflow:hidden " scrolling="no"></iframe>
         </div>
     </div>
 </body>
@@ -44,5 +41,7 @@ function Gossip() {
 function TopicModel() {
     document.getElementById('ifr_main').src = 'http://140.113.179.7:3344/pttWeb/topic';
 }
+
+
 </script>
 </html>

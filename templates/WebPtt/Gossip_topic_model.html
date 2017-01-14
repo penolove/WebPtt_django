@@ -10,10 +10,14 @@
 </head>
 
 
-<body style="height:90%" >
-    <div class="row" >
-        <div class="col-md-4 text-center" ><button id="PrevBtn"  type="button" class="btn btn-primary" style="margin-bottom: 2px;" onclick="Prev()">Prev_Week</button></div>
-        <div class='col-md-4 '>
+<body style="height:100%" >
+    <div class="row vertical-align" style="height:15%" >
+        <div class="col-md-4 col-sm-4 text-center" >
+            <button id="PrevBtn"  type="button" class="btn btn-primary" style="margin-bottom: 2px;" onclick="Prev()">
+                Prev_Week
+            </button>
+        </div>
+        <div class='col-md-4 col-sm-4'>
             <div class="form-group">
                 <div class="input-group date form_date" data-date="" data-date-format="yyyy/mm/dd" >
                     <input class="form-control" size="16" type="text" value="" readonly>
@@ -21,14 +25,12 @@
                 </div>
             </div>            
         </div>
-        <div class="col-md-4 text-center" ><button id="NextBtn" type="button" class="btn" style="margin-top: 2px;">Next_Week</button></div>
+        <div class="col-md-4 col-sm-4 text-center" ><button id="NextBtn" type="button" class="btn" style="margin-top: 2px;">Next_Week</button></div>
     </div>
 
 
-    <div class="row" style="height:100%">
-        <div class="col-md-8 col-md-offset-2" style="height:80%">
-            <img style="height:100% " class="center-block img-responsive" src="{{STATIC_PREFIX}}{{pic_path}}" alt="My image"/>
-        </div>
+    <div class="row" style="height:85%">
+        <img id="article_img" style="height:100% " class="center-block img-responsive" src="{{STATIC_PREFIX}}{{pic_path}}" alt="My image"/>
     </div>
 </body>
 
@@ -141,6 +143,26 @@ function Prev() {
 // ----------- button setting ----------------
 
 
+// ----------- device size to change img -----
+function findBootstrapEnvironment() {
+    var envs = ['xs', 'sm', 'md', 'lg'];
+    var $el = $('<div>');
+    $el.appendTo($('body'));
+
+    for (var i = envs.length - 1; i >= 0; i--) {
+        var env = envs[i];
+        $el.addClass('hidden-'+env);
+        if ($el.is(':hidden')) {
+            $el.remove();
+            return env;
+        }
+    }
+}
+
+if(findBootstrapEnvironment()=='sm'){
+    $('#article_img').css('height',"40%");
+}
+// ----------- device size to change img -----
 </script>
 
 
