@@ -11,7 +11,7 @@ url_dict={}
 
 # This tow dates should be handle properly
 # Here I reamin it as fixed
-endDate='2017.1.11'
+endDate='2017.6.15'
 startDate='2015.7.09'
 #startDate='2017.1.10'
 
@@ -226,4 +226,3 @@ def Topic_index(request):
     date=fileID[0][1]
     print date
     return render(request, 'WebPtt/Gossip_topic_model.html',{'pic_path':path,'week_img_list':week_img_list,'date':date})
-
